@@ -7,6 +7,7 @@
 <meta name="description" content="Full-stack AI engineer and lecturer in Manchester. Health tech, climate tech, and teaching." />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://api.github.com">
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=IBM+Plex+Mono:wght@400;500&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap" rel="stylesheet">
 <style>
   :root{
@@ -73,6 +74,20 @@
   .item h3{font-size:1.16rem;letter-spacing:-.01em;margin-bottom:.35rem}
   .item p{margin:0;font-size:1rem;color:var(--ink-soft)}
   .item .tags{margin-top:.6rem}
+
+  /* ---------- working notes (from GitHub Issues) ---------- */
+  .log{max-width:var(--measure)}
+  .entry{padding:1.5rem 0;border-top:1px solid var(--rule)}
+  .entry:first-child{border-top:0;padding-top:0}
+  .entry .meta{display:flex;flex-wrap:wrap;gap:.9rem;align-items:baseline;margin-bottom:.5rem}
+  .entry h3{font-size:1.08rem;letter-spacing:-.01em}
+  .entry .body{font-size:1rem;color:var(--ink-soft);margin:.4rem 0 0}
+  .entry .body p{margin:0 0 .6rem}
+  .entry .body p:last-child{margin-bottom:0}
+  .entry .body code{font-family:"IBM Plex Mono",monospace;font-size:.86em;background:var(--paper-2);padding:.1em .35em;border-radius:3px}
+  .tag{font-family:"IBM Plex Mono",monospace;font-size:.66rem;letter-spacing:.08em;text-transform:uppercase;
+       border:1px solid var(--rule);border-radius:2px;padding:.2em .5em;color:var(--ink-soft)}
+  .log .state{color:var(--ink-soft);font-size:1rem}
 
   ul.plain{list-style:none;padding:0;margin:0;max-width:var(--measure)}
   ul.plain li{padding:.7rem 0;border-bottom:1px solid var(--rule);font-size:1rem}
@@ -167,8 +182,16 @@
     </div>
   </section>
 
+  <section id="notes">
+    <div class="head"><span class="mono">03</span><h2>Working notes</h2></div>
+    <p class="mono" style="margin-bottom:2rem">Updated as I build · pulled live from GitHub</p>
+    <div class="log" id="log">
+      <p class="state">Loading notes…</p>
+    </div>
+  </section>
+
   <section id="teaching">
-    <div class="head"><span class="mono">03</span><h2>Teaching &amp; research</h2></div>
+    <div class="head"><span class="mono">04</span><h2>Teaching &amp; research</h2></div>
     <ul class="plain">
       <li>Associate Lecturer and Research Associate, University of Salford</li>
       <li>Senior Lecturer, ESOFT Metro Campus, 2018–2023 — BCS and Pearson HND programmes</li>
@@ -178,12 +201,11 @@
   </section>
 
   <section id="contact">
-    <div class="head"><span class="mono">04</span><h2>Get in touch</h2></div>
-    <p>Best by email. I answer everything that isn't a recruiter template.</p>
+    <div class="head"><span class="mono">05</span><h2>Get in touch</h2></div>
+    <p>LinkedIn is the fastest way to reach me. I answer everything that isn't a recruiter template.</p>
     <nav class="links">
-      <a href="mailto:you@example.com">Email</a>
-      <a href="https://github.com/yourusername">GitHub</a>
-      <a href="https://www.linkedin.com/in/yourusername">LinkedIn</a>
+      <a href="https://www.linkedin.com/in/lakshithalk">LinkedIn</a>
+      <a href="https://github.com/lakshithalk">GitHub</a>
       <a href="/cv.pdf">CV</a>
     </nav>
   </section>
@@ -194,7 +216,7 @@
 </div>
 
 <script>
-  // Career stripes: cool = earlier, warm = recent. Colour is chronology, not temperature.
+  /* ============ career stripes ============ */
   const years = [
     [2013, "Software engineering, Sri Lanka."],
     [2014, "Full-stack work across web and mobile."],
@@ -234,6 +256,72 @@
     b.addEventListener('click', show);
     box.appendChild(b);
   });
+
+  /* ============ working notes, from GitHub Issues ============
+     Post an update: open an issue on this repo, label it "log".
+     Close the issue to take it off the page. Extra labels become tags. */
+  const REPO  = 'lakshithalk/lakshithalk.github.io';
+  const LABEL = 'log';
+  const MAX   = 8;
+
+  const logEl = document.getElementById('log');
+
+  const esc = s => s.replace(/[&<>"']/g, c =>
+    ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
+  // Deliberately tiny: links, bold, inline code, paragraphs. Nothing else.
+  function render(md){
+    return esc(md.trim())
+      .split(/\n{2,}/)
+      .map(para => '<p>' + para
+        .replace(/\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g,
+                 '<a href="$2" rel="noopener">$1</a>')
+        .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
+        .replace(/`([^`]+)`/g, '<code>$1</code>')
+        .replace(/\n/g, ' ') + '</p>')
+      .join('');
+  }
+
+  const when = iso => new Date(iso).toLocaleDateString('en-GB',
+    { day:'numeric', month:'short', year:'numeric' });
+
+  async function loadNotes(){
+    const url = 'https://api.github.com/repos/' + REPO + '/issues'
+              + '?labels=' + LABEL + '&state=open&per_page=' + MAX
+              + '&sort=created&direction=desc';
+    try {
+      const res = await fetch(url, { headers:{ Accept:'application/vnd.github+json' } });
+      if (!res.ok) throw new Error(res.status);
+
+      const notes = (await res.json()).filter(i => !i.pull_request);
+
+      if (!notes.length){
+        logEl.innerHTML = '<p class="state">No notes yet. The first one is coming.</p>';
+        return;
+      }
+
+      logEl.innerHTML = notes.map(function(n){
+        const tags = n.labels
+          .filter(l => l.name !== LABEL)
+          .map(l => '<span class="tag">' + esc(l.name) + '</span>')
+          .join('');
+        return '<article class="entry">'
+             +   '<div class="meta">'
+             +     '<h3>' + esc(n.title) + '</h3>'
+             +     '<span class="mono">' + when(n.created_at) + '</span>'
+             +     tags
+             +   '</div>'
+             +   (n.body ? '<div class="body">' + render(n.body) + '</div>' : '')
+             + '</article>';
+      }).join('');
+
+    } catch (err) {
+      logEl.innerHTML = '<p class="state">Notes aren\'t loading right now. '
+        + 'They\'re all on <a href="https://github.com/' + REPO
+        + '/issues?q=label%3A' + LABEL + '" rel="noopener">GitHub</a>.</p>';
+    }
+  }
+  loadNotes();
 </script>
 </body>
 </html>
