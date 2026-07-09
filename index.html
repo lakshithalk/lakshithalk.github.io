@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Lakshitha Kumaranayake — Full-stack AI engineer</title>
+<meta name="description" content="Full-stack AI engineer and lecturer in Manchester. Health tech, climate tech, and teaching." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=IBM+Plex+Mono:wght@400;500&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0B1F2A;
+    --ink-soft:#4A5C63;
+    --paper:#E8EEF0;
+    --paper-2:#DFE7EA;
+    --cool:#1F5C8B;
+    --warm:#C55A2D;
+    --rule:rgba(11,31,42,.14);
+    --measure:66ch;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:"Source Serif 4",Georgia,serif;
+    font-size:18px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:960px;margin:0 auto;padding:0 24px}
+  a{color:var(--ink);text-decoration:none;border-bottom:1px solid var(--rule)}
+  a:hover{border-bottom-color:var(--warm);color:var(--warm)}
+  a:focus-visible,[tabindex]:focus-visible{outline:2px solid var(--cool);outline-offset:3px;border-radius:2px}
+
+  .mono{font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft)}
+  h1,h2,h3{font-family:"Bricolage Grotesque","Helvetica Neue",sans-serif;font-weight:700;line-height:1.02;margin:0}
+
+  /* ---------- hero ---------- */
+  header{padding:16vh 0 0}
+  h1{font-size:clamp(2.6rem,7.4vw,5.4rem);letter-spacing:-.03em}
+  h1 .sub{display:block;font-weight:500;font-size:.34em;letter-spacing:-.01em;color:var(--ink-soft);margin-top:.7rem;line-height:1.25}
+  .lede{max-width:var(--measure);margin:2rem 0 0;font-size:1.16rem}
+
+  /* ---------- signature: career stripes ---------- */
+  .stripes-block{margin:5rem 0 0;padding-bottom:5rem;border-bottom:1px solid var(--rule)}
+  .stripes{display:flex;gap:3px;height:150px;margin:.9rem 0 0}
+  .stripe{
+    flex:1;border:0;padding:0;cursor:pointer;border-radius:1px;
+    transition:transform .18s ease, filter .18s ease;
+    transform-origin:bottom;
+  }
+  .stripe:hover,.stripe:focus-visible,.stripe[aria-current="true"]{transform:scaleY(1.08);filter:saturate(1.25)}
+  .readout{
+    display:flex;gap:1.2rem;align-items:baseline;margin-top:1rem;
+    min-height:1.6rem;border-top:1px solid var(--rule);padding-top:.8rem;
+  }
+  .readout .yr{font-family:"IBM Plex Mono",monospace;font-weight:500;color:var(--ink)}
+  .readout .ev{font-size:.98rem;color:var(--ink-soft)}
+
+  /* ---------- sections ---------- */
+  section{padding:5rem 0;border-bottom:1px solid var(--rule)}
+  .head{display:flex;align-items:baseline;gap:1rem;margin-bottom:2.4rem}
+  .head h2{font-size:clamp(1.5rem,3vw,2.1rem);letter-spacing:-.02em}
+  p{max-width:var(--measure)}
+
+  .work{display:grid;gap:1px;background:var(--rule);border:1px solid var(--rule)}
+  .item{background:var(--paper);padding:1.6rem 1.5rem;display:grid;grid-template-columns:auto 1fr;gap:1.2rem;align-items:start}
+  .item:hover{background:var(--paper-2)}
+  .dot{width:10px;height:10px;border-radius:50%;margin-top:.55rem}
+  .item h3{font-size:1.16rem;letter-spacing:-.01em;margin-bottom:.35rem}
+  .item p{margin:0;font-size:1rem;color:var(--ink-soft)}
+  .item .tags{margin-top:.6rem}
+
+  ul.plain{list-style:none;padding:0;margin:0;max-width:var(--measure)}
+  ul.plain li{padding:.7rem 0;border-bottom:1px solid var(--rule);font-size:1rem}
+  ul.plain li:last-child{border-bottom:0}
+
+  .links{display:flex;flex-wrap:wrap;gap:1.6rem;margin-top:1.6rem}
+  .links a{font-family:"Bricolage Grotesque",sans-serif;font-weight:500;font-size:1.05rem;border-bottom:2px solid var(--cool)}
+
+  footer{padding:3rem 0 4rem}
+
+  @media (max-width:640px){
+    header{padding-top:10vh}
+    .stripes{height:110px;gap:2px}
+    .item{grid-template-columns:1fr}
+    .dot{display:none}
+    section{padding:3.5rem 0}
+  }
+  @media (prefers-reduced-motion:reduce){
+    *{transition:none!important;scroll-behavior:auto}
+    .stripe:hover,.stripe:focus-visible{transform:none}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <h1>Lakshitha<br>Kumaranayake
+      <span class="sub">Full-stack AI engineer · Associate lecturer · Manchester, UK</span>
+    </h1>
+    <p class="lede">I build software where the stakes are real — clinical assessment tools, letters people are afraid to open, climate data that should be public. Ten years across engineering and higher education, in Sri Lanka and the UK.</p>
+
+    <div class="stripes-block">
+      <p class="mono">A decade, one stripe per year — hover or tab through</p>
+      <div class="stripes" id="stripes" role="group" aria-label="Career timeline"></div>
+      <div class="readout">
+        <span class="yr mono" id="yr">2026</span>
+        <span class="ev" id="ev">Building ENSO Watch — an open climate dashboard.</span>
+      </div>
+    </div>
+  </header>
+
+  <section id="now">
+    <div class="head"><span class="mono">01</span><h2>Now</h2></div>
+    <p>Software engineer at a health-tech SaaS company, teaching Managing Information Systems &amp; Transformation at the University of Salford, and taking on selected consulting work through KNOXIT Ltd.</p>
+    <p>Open to full-stack and AI engineering roles. I hold a UK post-study work visa and will need Skilled Worker sponsorship from early 2027.</p>
+  </section>
+
+  <section id="work">
+    <div class="head"><span class="mono">02</span><h2>Selected work</h2></div>
+    <div class="work">
+      <article class="item">
+        <span class="dot" style="background:#1F5C8B"></span>
+        <div>
+          <h3>ENSO Watch</h3>
+          <p>A real-time global dashboard for El Niño and La Niña impacts, in the spirit of the Johns Hopkins COVID map. Open source, donation-funded, with Sri Lanka as the first region.</p>
+          <p class="mono tags">Next.js · FastAPI · TimescaleDB</p>
+        </div>
+      </article>
+      <article class="item">
+        <span class="dot" style="background:#3E7A9E"></span>
+        <div>
+          <h3>LetterBridge</h3>
+          <p>Turns an NHS or DWP letter into plain English, then answers the questions it raises. Encrypted end to end, because these letters are nobody else's business.</p>
+          <p class="mono tags">Claude API · Stripe · AES-256</p>
+        </div>
+      </article>
+      <article class="item">
+        <span class="dot" style="background:#8A7A63"></span>
+        <div>
+          <h3>ReMo</h3>
+          <p>Physiotherapy adherence at home. Pose estimation checks the exercise is done properly and gives the clinician something better than a self-report.</p>
+          <p class="mono tags">MediaPipe · NHS pathway</p>
+        </div>
+      </article>
+      <article class="item">
+        <span class="dot" style="background:#B8703B"></span>
+        <div>
+          <h3>MoRIS</h3>
+          <p>A clinical platform for autism and social-communication assessment, presented at the Cambridge Paediatric Health Tech Sprint.</p>
+          <p class="mono tags">Clinical tooling · Research</p>
+        </div>
+      </article>
+      <article class="item">
+        <span class="dot" style="background:#C55A2D"></span>
+        <div>
+          <h3>Snoozify</h3>
+          <p>A sleep app for teenagers who will not use a sleep app. Progressive web app, LLM-orchestrated coaching.</p>
+          <p class="mono tags">Next.js · Genkit</p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section id="teaching">
+    <div class="head"><span class="mono">03</span><h2>Teaching &amp; research</h2></div>
+    <ul class="plain">
+      <li>Associate Lecturer and Research Associate, University of Salford</li>
+      <li>Senior Lecturer, ESOFT Metro Campus, 2018–2023 — BCS and Pearson HND programmes</li>
+      <li>MSc Data Science with Machine Learning, Distinction</li>
+      <li>Working towards Senior Fellowship of the Higher Education Academy</li>
+    </ul>
+  </section>
+
+  <section id="contact">
+    <div class="head"><span class="mono">04</span><h2>Get in touch</h2></div>
+    <p>Best by email. I answer everything that isn't a recruiter template.</p>
+    <nav class="links">
+      <a href="mailto:you@example.com">Email</a>
+      <a href="https://github.com/yourusername">GitHub</a>
+      <a href="https://www.linkedin.com/in/yourusername">LinkedIn</a>
+      <a href="/cv.pdf">CV</a>
+    </nav>
+  </section>
+
+  <footer>
+    <p class="mono">Built and hosted on GitHub Pages · Manchester</p>
+  </footer>
+</div>
+
+<script>
+  // Career stripes: cool = earlier, warm = recent. Colour is chronology, not temperature.
+  const years = [
+    [2013, "Software engineering, Sri Lanka."],
+    [2014, "Full-stack work across web and mobile."],
+    [2015, "Project manager and software engineer, LK Technologies."],
+    [2016, "Delivering client systems end to end."],
+    [2017, "First teaching, alongside engineering."],
+    [2018, "Senior Lecturer at ESOFT Metro Campus."],
+    [2019, "Leading BCS and Pearson HND programmes."],
+    [2020, "Remote delivery, redesigned curricula."],
+    [2021, "Ten years of shipping software."],
+    [2022, "Moved to the UK. MSc Data Science, Salford."],
+    [2023, "Digitalisation Support Officer, IOM — UN Migration."],
+    [2024, "MSc with Distinction. Consulting through KNOXIT Ltd."],
+    [2025, "Back to full-stack and AI engineering in Manchester."],
+    [2026, "Building ENSO Watch — an open climate dashboard."]
+  ];
+  const palette = ["#1B4E77","#1F5C8B","#2E6C93","#3E7A9E","#5A8399","#71827C","#8A7A63","#A07350","#B06941","#B8703B","#C06034","#C55A2D","#C24E24","#B8421C"];
+
+  const box = document.getElementById('stripes');
+  const yr = document.getElementById('yr');
+  const ev = document.getElementById('ev');
+
+  years.forEach(([year, note], i) => {
+    const b = document.createElement('button');
+    b.className = 'stripe';
+    b.style.background = palette[i];
+    b.type = 'button';
+    b.setAttribute('aria-label', year + ': ' + note);
+    const show = () => {
+      yr.textContent = year;
+      ev.textContent = note;
+      box.querySelectorAll('.stripe').forEach(s => s.setAttribute('aria-current','false'));
+      b.setAttribute('aria-current','true');
+    };
+    b.addEventListener('mouseenter', show);
+    b.addEventListener('focus', show);
+    b.addEventListener('click', show);
+    box.appendChild(b);
+  });
+</script>
+</body>
+</html>
